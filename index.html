@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DINERO EXTREMO — Calculadora financiera</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="stylesheet" href="styles.css" />
+    <style>
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',sans-serif}
+    body{background:#f4f4f4;color:#333}
+    header{background:#1e8f4a;color:#333;padding:20px;text-align:center}
+    header img{width:60px;height:auto;vertical-align:middle;margin-right:10px}
+    header h1{display:inline;font-size:50px;vertical-align:middle}
+    nav{display:flex;justify-content:center;padding:10px 0;flex-wrap:wrap}
+    nav a{color:#fff;text-decoration:none;font-weight:bold;transition:0.3s;cursor:pointer}
+    nav a:hover{color:#f0c419}
+    section{padding:10px 100px;text-align:center}
+    section h2{color:#1e8f4a;margin-bottom:10px;font-size:40px}
+    section a{color:#1e8f4a;margin-bottom:10px;font-size:40px;font-weight:bold}    
+        
+    .slogan{font-size:30px;margin-bottom:10px;text-transform:uppercase;font-weight:bold}
+    .slogan span{color:#1e8f4a}
+    .btn{background:#1e8f4a;color:#fff;border:none;margin:20px auto;padding:10px 20px;border-radius:8px;cursor:pointer;transition:0.3s}
+    .btn:hover{background:#16783a}
+    .card{background:#fff;border-radius:10px;box-shadow:0 4px 8px rgba(0,0,0,0.1);padding:20px;margin:20px auto;max-width:800px;text-align:left}
+    footer{background:#333;color:#fff;text-align:center;padding:15px;margin-top:40px}
+    input,textarea{width:100%;padding:10px;margin:10px 0;border:1px solid #ccc;border-radius:6px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-top:20px}
+    .result{background:#f0c419;color:#111;padding:15px;border-radius:8px;text-align:center;font-weight:bold}
+    #subsidio{display:none;padding:20px;margin-top:20px;background:#fff5cc;border:1px solid #f0c419;border-radius:10px;text-align:left}
+    #mensajeSubsidio{margin-top:15px;font-weight:bold;text-align:center;padding:10px;border-radius:10px;max-width:500px;margin-left:auto;margin-right:auto}
+    .verde{color:#1e8f4a;background:#d6f5d6;border:1px solid #1e8f4a;}
+    .rojo{color:#d62c2c;background:#f8d7da;border:1px solid #d62c2c;}
+    .modal{display:none;position:fixed;z-index:10;left:0;top:0;width:100%;height:100%;overflow:auto;background:rgba(0,0,0,0.6)}
+    .modal-content{background:#fff;margin:15% auto;padding:20px;border-radius:10px;max-width:700px;text-align:left}
+    .close{color:#d62c2c;float:right;font-size:24px;font-weight:bold;cursor:pointer}
+    .close:hover{color:#a00}
+        /* ----------- Modal confirmación registro (centrado) ------------ */
+.modal-confirm {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-confirm-content {
+    background: #ffffff;
+    padding: 25px;
+    width: 320px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+}
+
+/* ----------- Modal pequeño después del login ------------ */
+.modal-mini {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-mini-content {
+    background: #fff;
+    padding: 20px;
+    width: 260px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.25);
+}
+
+  </style>
+
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <img src="logo.png" alt="Logo Dinero Extremo" class="logo-img" />
+        <div class="brand">
+          <h1>DINERO EXTREMO</h1>
+          <p class="tag">Soluciones financieras</p>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#inicio">Inicio</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#calculadora">Calculadora</a>
+        <a href="#contacto">Contacto</a>
+        <button id="btn-register" class="btn-outline">Registrarme</button>
+        <button id="btn-login" class="btn-primary">Iniciar sesión</button>
+          
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+      <section id="inicio">
+    <h2>Bienvenido a Dinero Extremo</h2>
+    <p class="slogan">DEL CÁLCULO A LA ACCIÓN, DEL <span>NEGOCIO AL ÉXITO</span></p>
+    <p>Tu plataforma para calcular y gestionar tus finanzas personales y empresariales en Colombia. Aquí podrás realizar cálculos financieros conforme a la normativa colombiana, consultar información contable y recibir asesorías especializadas.</p>
+    <button class="btn" id="btnSubsidio">Ver información sobre el subsidio de transporte</button>
+    <div id="subsidio">
+      <h3>Subsidio de Transporte en Colombia 2025</h3>
+      <p>El subsidio de transporte en Colombia para el año 2025 es de <strong>$200.000 pesos mensuales</strong>. Se otorga a aquellos trabajadores que ganan hasta dos salarios mínimos mensuales legales vigentes (<strong>$2.847.000</strong>).</p>
+    </div>
+  </section>
+
+
+  <div id="modalComoFunciona" class="modal">
+    <div class="modal-content">
+      <span class="close" id="cerrarModal">&times;</span>
+      <h2>Cómo funciona la página</h2>
+      <p>Dinero Extremo es una herramienta diseñada para ayudarte a gestionar tus finanzas personales y laborales en Colombia. Su funcionamiento es simple y práctico:</p>
+      <ul>
+        <li><strong>1.</strong> Ingresa tu salario mensual y selecciona las fechas de inicio y fin de tu trabajo.</li>
+        <li><strong>2.</strong> El sistema calculará automáticamente los días trabajados (considerando 30 días laborales por mes).</li>
+        <li><strong>3.</strong> Calcula tus <strong>primas</strong>, <strong>cesantías</strong> y <strong>vacaciones</strong> según la ley.</li>
+      </ul>
+    </div>
+  </div>
+      
+      <section id="servicios">
+    <a>Servicios</a>
+    <div   id="textservicios">
+        <p><strong>Información educativa respecto a las finanzas de Colombia •   Cesantias   •   Vacaciones   •   Primas   •   Cálculos financieros</strong></p>
+          </div>
+  </section>
+      
+      
+      
+
+  <section id="calculadora">
+    <h2>Calculadora Financiera</h2>
+    <div class="card">
+      <label>Salario mensual (COP)</label>
+      <input type="number" id="salario" placeholder="Ejemplo: 1200000">
+
+      <!-- CAMPOS DE CALENDARIO -->
+      <label>Fecha de inicio</label>
+      <input type="date" id="fechaInicio">
+      <label>Fecha de finalización</label>
+      <input type="date" id="fechaFin">
+
+      <label>Días trabajados (calculado automáticamente)</label>
+      <input type="number" id="diasTrabajados" placeholder="Calculado automáticamente" readonly>
+
+      <label>Días de vacaciones (calculado automáticamente)</label>
+      <input type="number" id="dias" placeholder="Calculado automáticamente" readonly>
+
+      <button class="btn" id="calcular">Calcular</button>
+      <div id="mensajeSubsidio"></div>
+      <div class="grid">
+        <div class="result" id="prima">Prima: -</div>
+        <div class="result" id="cesantia">Cesantías: -</div>
+        <div class="result" id="vacaciones">Vacaciones: -</div>
+        <div class="result" id="total">Total con subsidio: -</div>
+      </div>
+    </div>
+  </section>
+
+       
+    <section id="contacto" class="contact">
+      <div class="container">
+        <h3>Contacto</h3>
+        <form id="contact-form" class="card">
+          <input type="text" id="name" placeholder="Nombre" required />
+          <input type="email" id="email" placeholder="Correo" required />
+          <textarea id="message" placeholder="Mensaje" rows="4"></textarea>
+          <button type="submit" class="btn-primary">Enviar</button>
+        </form>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© 2025 DINERO EXTREMO S.A.S — Todos los derechos reservados. Aplicación desarrollada según la normativa laboral colombiana.</p>
+      </div>
+    </footer>
+  </main>
+
+  <div id="info-panel" class="info-panel">
+    <div class="info-card">
+      <button id="info-close" class="modal-close">×</button>
+      <h4>Información</h4>
+      <p>El subsidio de transporte 2025 en Colombia es de 200.000 COP mensuales y aplica para trabajadores con sueldo hasta dos salarios mínimos (2.847.000 COP). No se incluye para cálculo de vacaciones.</p>
+    </div>
+  </div>
+
+  <script src="script/script.js"></script>
+    
+   <!-- MODAL DE REGISTRO -->
+<div id="modalRegistro" class="modal">
+  <div class="modal-content">
+    <span class="close" id="cerrarRegistro">&times;</span>
+    <h2>Crear cuenta</h2>
+
+    <label>Nombre completo</label>
+    <form id="formRegistro"><input type="text" id="regNombre" placeholder="Tu nombre">
+
+    <label>Correo electrónico</label>
+    <input type="email" id="regCorreo" placeholder="correo@ejemplo.com">
+
+    <label>Contraseña</label>
+    <input type="password" id="regPass" placeholder="********">
+
+    <button class="btn" id="btn-register-submit" type="submit">Registrarme</button>
+    </form>
+    </div>
+</div>
+
+<!-- MODAL DE INICIO DE SESIÓN -->
+<div id="modalLogin" class="modal">
+  <div class="modal-content">
+    <span class="close" id="cerrarLogin">&times;</span>
+    <h2>Iniciar sesión</h2>
+    <form id="formLogin">
+    <label>Correo electrónico</label>
+    <input type="email" id="loginCorreo" placeholder="correo@ejemplo.com">
+
+    <label>Contraseña</label>
+    <input type="password" id="loginPass" placeholder="********">
+
+    <button class="btn" id="btn-login-submit" type="submit">Iniciar sesión</button>
+    </form>
+    </div>
+   
+</div>
+    
+    <!-- --------------- MODAL CONFIRMACIÓN REGISTRO ---------------- -->
+<div id="modalConfirmRegistro" class="modal-confirm">
+    <div class="modal-confirm-content">
+        <h3>🎉 Registro exitoso</h3>
+        <p>Tu cuenta ha sido creada correctamente.</p>
+        <button id="cerrarConfirmRegistro">Aceptar</button>
+        <button id="btn-register-submit">Registrarme</button>
+    </div>
+</div>
+
+<!-- --------------- MODAL INICIO DE SESIÓN ---------------- -->
+<div id="modalBienvenida" class="modal-mini">
+    <div class="modal-mini-content">
+        <h4>¡Bienvenido! 👋</h4>
+        <p>Has iniciado sesión correctamente.</p>
+        <button id="cerrarBienvenida">Continuar</button>
+        <button id="btn-login-submit">Iniciar sesión</button>
+        
+    </div>
+</div>
+
+ 
+</body>
+</html>
